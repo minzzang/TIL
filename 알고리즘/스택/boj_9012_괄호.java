@@ -52,3 +52,47 @@ public class Main {
 
     }
 }
+
+/////////// 2차 코드
+public class Main {
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Stack<String> stack = new Stack<>();
+        
+        int N = sc.nextInt();
+
+        for (int i=0; i<N; i++) {
+
+            String s = sc.next();
+            stack.clear();
+            if (isVPS(s, stack)) {
+                System.out.println("YES");
+            } else {
+                System.out.println("NO");
+            }
+        }
+    }
+    
+    private static boolean isVPS(String s, Stack stack) {
+
+        for (int i=0; i<s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch== '(') {
+                stack.push(ch);
+                continue;
+            }
+            if (stack.empty()) {
+                return false;
+            }
+            stack.pop();
+        }
+
+        if (stack.empty()) {
+            return true;
+        }
+        return false;
+
+    }
+}
