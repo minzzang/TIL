@@ -30,3 +30,27 @@ class Solution {
             return count;
         }
     }
+
+/////////
+
+class Solution {
+        public int solution(int N) {
+             int count = 0;
+       	 int totalCount = 0;
+
+       	 String byteString = Integer.toBinaryString(N);
+
+      	  for (int i=0; i<byteString.length(); i++) {
+
+      	      if (byteString.charAt(i) == '1') {
+       	         if (totalCount < count) {
+       	             totalCount = count;
+         	           count = 0;
+       	         }
+      	      } else {
+      	          count++;
+      	      }
+       	 }
+      	  return totalCount;
+       	 }
+    }
