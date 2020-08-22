@@ -7,19 +7,29 @@
   *
   */
 
+import java.util.Map;
+import java.util.HashMap;
+
 class Solution {
-        public int solution(int[] A) {
-        Map<Integer, Integer> count = new HashMap<>();
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        Map<Integer, Integer> map = new HashMap<>();
 
         for (int i=0; i<A.length; i++) {
-            System.out.println(count.get(A[i]));
 
-            if (count.get(A[i]) == null) {
-                count.put(A[i], 1);
+            if (map.get(A[i]) == null) {
+                map.put(A[i], 1);
             } else {
-               
+                map.put(A[i], map.get(A[i]) + 1);
             }
         }
-    
-    }
 
+        for (Integer key : map.keySet()) {
+            if (map.get(key) % 2 != 0) {
+                return key;
+            }
+        }
+
+        return -1;
+    }
+}
