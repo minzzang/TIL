@@ -10,8 +10,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -30,35 +29,42 @@ public class Main {
         int[] a = new int[A];
         int[] b = new int[B];
 
-        Map<Integer, Integer> minusMap = new HashMap<>();
-        Map<Integer, Integer> map = new HashMap<>();
-
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < A; i++) {
-            int num = Integer.parseInt(st.nextToken());
-            if (num >= 0) {
-                map.put(num, 1);
-            } else {
-                minusMap.put(num, 1);
-            }
+        for (int n=0; n<A; n++) {
+            a[n] = Integer.parseInt(st.nextToken());
         }
 
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < B; i++) {
-            int num = Integer.parseInt(st.nextToken());
-            if (num >= 0) {
-                map.put(num, 1);
+        for (int n=0; n<B; n++) {
+            b[n] = Integer.parseInt(st.nextToken());
+        }
+
+        Arrays.sort(a);
+        Arrays.sort(b);
+
+        int[] result = new int[A+B];
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i<A && j<B) {
+            if(a[i] > b[j]) {
+                result[k++] = b[j++];
             } else {
-                minusMap.put(num, 1);
+                result[k++] = a[i++];
             }
         }
 
-        for (int n : minusMap.keySet()) {
-            sb.append(n + " ");
+        while (i != A) {
+            result[k++] = a[i++];
         }
 
-        for (int n : map.keySet()) {
-            sb.append(n + " ");
+        while (j != B) {
+            result[k++] = b[j++];
+        }
+
+        for (int n=0; n<result.length; n++) {
+            sb.append(result[n] + " ");
         }
         System.out.println(sb);
     }
