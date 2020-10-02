@@ -34,13 +34,16 @@ public class Main {
             for (int i=1; i<=N; i++) {
                 arr[1][i] = Integer.parseInt(st.nextToken());
             }
+            dp[0][1] = Math.max(arr[0][1], arr[1][1]);
+            dp[1][1] = arr[0][1];
+            dp[2][1] = arr[1][1];
 
-            for(int i=1; i<=N; i++) {
-                dp[0][i-1] = Math.max(dp[0][i-1], Math.max(dp[1][i-1], dp[2][i-1]));
-                dp[1][i-1] = Math.max(dp[0][i-1], dp[2][i-1] + arr[0][i]);
-                dp[2][i-1] = Math.max(dp[0][i-1], dp[1][i-1] + arr[1][i]);
+            for(int i=2; i<=N; i++) {
+                dp[0][i] = Math.max(dp[0][i-2], Math.max(dp[1][i-2], dp[2][i-2])) + Math.max(arr[0][i], arr[1][i]);
+                dp[1][i] = Math.max(dp[2][i-2], dp[1][i-1]) + arr[i%2==0 ? 1:0][i];
+                dp[2][i] = Math.max(dp[1][i-2], dp[2][i-1]) + arr[i%2][i];
             }
-            int sum = Math.max(dp[0][N-1], Math.max(dp[1][N-1], dp[2][N-1]));
+            int sum = Math.max(dp[0][N], Math.max(dp[1][N], dp[2][N]));
 
             sb.append(sum + "\n");
         }
