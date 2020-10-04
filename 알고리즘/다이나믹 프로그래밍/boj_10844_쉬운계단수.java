@@ -2,7 +2,7 @@
   * About
   *
   * Author: minzzang@GitHub (minjjang1117@gmail.com)
-  * Date  : 2020-10-03
+  * Date  : 2020-10-04
   * URL   : https://www.acmicpc.net/problem/10844
   *
   */
