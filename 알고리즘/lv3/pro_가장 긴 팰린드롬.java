@@ -12,6 +12,8 @@ class Solution
     public int solution(String s)
     {
         int answer = 0;
+        char[] ch = s.toCharArray();
+
 
         return answer;
     }
