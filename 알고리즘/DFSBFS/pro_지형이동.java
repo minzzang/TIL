@@ -50,6 +50,7 @@ class Solution {
 
         Collections.sort(list, (o1, o2) -> o1.dist - o2.dist);
 
+        find();
 
         return answer;
     }
@@ -69,6 +70,8 @@ class Solution {
             dfs(newY, newX, height, land);
         }
     }
+
+    
 }
 
 class Node {
