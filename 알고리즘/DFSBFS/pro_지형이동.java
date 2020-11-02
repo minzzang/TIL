@@ -2,16 +2,22 @@
   * About
   *
   * Author: minzzang@GitHub (minjjang1117@gmail.com)
-  * Date  : 2020-10-31
+  * Date  : 2020-11-02
   * URL   : https://programmers.co.kr/learn/courses/30/lessons/62050
   *
   */
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 class Solution {
-   public static int solution(int[][] land, int height) {
-        int answer = 0;
-
-        copyLand = new int[land.length][land[0].length];
+    private static int[] dx = {0, 0, 1, -1};
+    private static int[] dy = {1, -1, 0, 0};
+    private static int[][] copyLand;
+    private static int index;
+    
+    public int solution(int[][] land, int height) {
+            copyLand = new int[land.length][land[0].length];
         index = -1;
         for (int i=0; i<land.length; i++) {
             for (int j=0; j<land[0].length; j++) {
@@ -23,15 +29,6 @@ class Solution {
             }
         }
 
-        for (int i=0; i<land.length; i++) {
-            for (int j=0; j<land[0].length; j++) {
-                System.out.print(copyLand[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        int count = -index;
-        int[] min = new int[count];
         List<Node> list = new ArrayList<>();
         for (int i=0; i<land.length; i++) {
             for (int j=0; j<land[0].length; j++) {
@@ -43,15 +40,55 @@ class Solution {
 
                     int dist = Math.abs(copyLand[i][j] - copyLand[newY][newX]);
                     if (dist == 0) continue;
-                    list.add(new Node(newX, newY, dist));
+                    list.add(new Node(-copyLand[i][j], -copyLand[newY][newX], Math.abs(land[i][j] - land[newY][newX])));
                 }
             }
         }
 
         Collections.sort(list, (o1, o2) -> o1.dist - o2.dist);
+        
+        int[] find = new int[-(index-1)];
+        for (int i=1; i<find.length; i++) {
+            find[i] = i;
+        }
 
+        int count = 0;
+        int answer = 0;
+        for (int i=0; i<list.size(); i++) {
+            Node node = list.get(i);
+            int a = node.y;
+            int b = node.x;
+            if (a == b) continue;
+            if (findParent(find, a, b) == 0) {
+                union(find, a, b);
+                count++;
+                answer += node.dist;
+            }
+            if (count == -(index + 1)) break;
+        }
 
         return answer;
+    }
+
+    private static void union(int[] find, int a, int b) {
+        a = getParent(find, a);
+        b = getParent(find, b);
+
+        if (a > b) find[a] = b;
+        else find[b] = a;
+    }
+
+    private static int findParent(int[] find, int a, int b) {
+        a = getParent(find, a);
+        b = getParent(find, b);
+
+        if (a == b) return 1;
+        return 0;
+    }
+
+    private static int getParent(int[] find, int a) {
+        if (find[a] == a) return a;
+        return getParent(find, find[a]);
     }
 
     private static void dfs(int y, int x, int height, int[][] land) {
