@@ -2,7 +2,7 @@
   * About
   *
   * Author: minzzang@GitHub (minjjang1117@gmail.com)
-  * Date  : 2020-12-19
+  * Date  : 2020-12-21
   * URL   : https://programmers.co.kr/learn/courses/30/lessons/68646
   *
   */
@@ -10,28 +10,25 @@
 import java.util.*;
 class Solution {
     public int solution(int[] a) {
-       if (a.length == 1) return 1;
-        if (a.length == 2) return 2;
-
         int answer = 2;
-        int[] copyA = a.clone();
-        Arrays.sort(copyA);
-        int minIndex = 0;
-        int leftMin = a[0];
-        int rightMin = copyA[minIndex++];
-        if (a[0] == copyA[0]) {
-            leftMin = copyA[0];
-            rightMin = copyA[minIndex++];
+        int [][] map = new int [a.length][2];
+        int l = a[0];
+        int r = a[a.length-1];
+
+        for (int i = 1; i < a.length-1; i++) {
+            if (l > a[i]) l = a[i];
+            map[i][0] = l;
         }
 
-        for (int i=1; i<a.length-1; i++) {
-            if (rightMin == a[i]) {
-                rightMin = copyA[minIndex++];
-            }
-            int max = Math.max(a[i], Math.max(leftMin, rightMin));
-            if (a[i] != max) answer++;
-            leftMin = Math.min(leftMin, a[i]);
+        for (int i = a.length-2; i > 0; i--) {
+            if (r > a[i]) r = a[i];
+            map[i][1] = r;
         }
+
+        for (int i = 1; i < a.length-1; i++) {
+            if (a[i] <= map[i][0] || a[i] <= map[i][1]) answer++;
+        }
+
         return answer;
     }
 }
