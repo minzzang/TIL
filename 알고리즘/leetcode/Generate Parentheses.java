@@ -7,32 +7,24 @@
   *
   */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-class Main {
-
+class Solution {
     static char[] ch;
-    static int COUNT;
-    static List<String> list = new ArrayList<>();
-
-    public static void main(String[] args) {
-        generateParenthesis(3);
-    }
-
-    public static List<String> generateParenthesis(int n) {
+    static List<String> list;
+    
+    public List<String> generateParenthesis(int n) {
         ch = new char[n * 2 + 1];
+        list = new ArrayList<>();
 
         dfs(0, n * 2);
         
         return list;
     }
-
+    
     private static void dfs(int depth, int n) {
         if (depth == n) {
-            if (isValid(ch)) {
-
-            }
+            if (isValid(ch)) appendParenthesis(ch);
             return;
         }
 
@@ -49,9 +41,16 @@ class Main {
             if (ch[i] == '(') n++;
             else n--;
 
-            if (n < 0 || n > (ch.length - 1) / 2) return false;
+            if (n < 0) return false;
         }
-        return true;
+        return n == 0;
     }
 
+    private static void appendParenthesis(char[] ch) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < ch.length - 1; i++) {
+            sb.append(ch[i]);
+        }
+        list.add(sb.toString());
+    }
 }
