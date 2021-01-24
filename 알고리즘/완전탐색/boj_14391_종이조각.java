@@ -2,7 +2,7 @@
   * About
   *
   * Author: minzzang@GitHub (minjjang1117@gmail.com)
-  * Date  : 2020-12-20
+  * Date  : 2020-01-24
   * URL   : https://www.acmicpc.net/problem/14391
   *
   */
@@ -10,45 +10,78 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.StringTokenizer;
 
 public class Main {
+    static boolean[] visited;
+    static int n, m, MAX;
+    static int[][] papers;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        char[][] paper = new char[N][M];
-
-        String[] x = new String[N];
-        for (int i = 0; i < N; i++) {
-            String str = br.readLine();
-            x[i] = str;
-            for (int j = 0; j < M; j++) {
-                paper[i][j] = str.charAt(j);
+        papers = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            String s = br.readLine();
+            for (int j = 0; j < m; j++) {
+                papers[i][j] = s.charAt(j) - '0';
             }
         }
 
-        String[] y = new String[M];
-        for (int i = 0; i < M; i++) {
-            String str = "";
-            for (int j = 0; j < N; j++) {
-                str += paper[j][i];
-            }
-            y[i] = str;
-        }
+        visited = new boolean[n * m];
+        dfs(0);
 
-        int xSum = 0;
-        for (int i = 0; i < x.length; i++) {
-            xSum += Integer.parseInt(x[i]);
-        }
-
-        int ySum = 0;
-        for (int i = 0; i < y.length; i++) {
-            ySum += Integer.parseInt(y[i]);
-        }
-        System.out.println(Math.max(xSum, ySum));
+        System.out.println(MAX);
     }
+
+    private static void dfs(int index) {
+        if (index == n * m) {
+            getMax();
+            MAX = Math.max(MAX, getMax());
+            return;
+        }
+
+        visited[index] = true;
+        dfs(index + 1);
+
+        visited[index] = false;
+        dfs(index + 1);
+    }
+
+    private static int getMax() {
+        int index = 0;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            int temp = 0;
+            for (int j = 0; j < m; j++) {
+                if (visited[index++]) {
+                    temp = temp * 10 + papers[i][j];
+                } else {
+                    sum += temp;
+                    temp = 0;
+                }
+            }
+            if (temp != 0) sum += temp;
+        }
+
+        for (int i = 0; i < m; i++) {
+            int temp = 0;
+            index = i;
+            for (int j = 0; j < n; j++) {
+                if (!visited[index]) {
+                    temp = temp * 10 + papers[j][i];
+                } else {
+                    sum += temp;
+                    temp = 0;
+                }
+                index += m;
+            }
+            if (temp != 0) sum += temp;
+        }
+        return sum;
+    }
+
 }
