@@ -2,7 +2,7 @@
   * About
   *
   * Author: minzzang@GitHub (minjjang1117@gmail.com)
-  * Date  : 2021-03-10
+  * Date  : 2021-03-11
   * URL   : https://leetcode.com/problems/sum-of-nodes-with-even-valued-grandparent/
   *
   */
