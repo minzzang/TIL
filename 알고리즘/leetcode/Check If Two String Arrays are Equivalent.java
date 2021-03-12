@@ -2,7 +2,7 @@
   * About
   *
   * Author: minzzang@GitHub (minjjang1117@gmail.com)
-  * Date  : 2021-01-08
+  * Date  : 2021-03-12
   * URL   : https://leetcode.com/problems/check-if-two-string-arrays-are-equivalent
   *
   */
